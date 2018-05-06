@@ -1,0 +1,22 @@
+<component name="libraryTable">
+  <library name="hadoop-mapreduce-client-app-2.7.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.7.1.jar!/" />
+      <root url="jar://$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-2.7.1.jar!/" />
+      <root url="file://$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/common" />
+      <root url="file://$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/hdfs" />
+      <root url="file://$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/common/lib" />
+      <root url="jar://$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/mapreduce/hadoop-mapreduce-client-common-2.7.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/common/jdiff" />
+      <root url="file://$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/hdfs/jdiff" />
+      <root url="file://$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/common/lib" />
+    </SOURCES>
+    <jarDirectory url="file://$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/common" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/common/lib" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/hdfs" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/common/lib" recursive="false" type="SOURCES" />
+  </library>
+</component>
