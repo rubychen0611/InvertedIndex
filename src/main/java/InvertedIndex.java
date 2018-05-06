@@ -4,10 +4,12 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
+import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
+import org.apache.hadoop.hbase.mapreduce.TableOutputFormat;
+import org.apache.hadoop.hbase.mapreduce.TableReducer;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -15,6 +17,8 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.mapreduce.lib.partition.HashPartitioner;
 
 import java.io.IOException;
@@ -25,14 +29,10 @@ public class InvertedIndex
     private static String tableName = "Wuxia";
     private static Configuration HBASE_CONFIG = HBaseConfiguration.create();
     //private static HTable table;
-
+    private static MultipleOutputs<Text, Text> mos;
+    private static Path outputPath;
     public static class InvertedIndexMapper extends Mapper<LongWritable, Text, Text, IntWritable>
     {
-       /* public void setup(Context context) throws IOException
-        {
-
-
-        }*/
 
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException
         {
@@ -75,13 +75,17 @@ public class InvertedIndex
             return super.getPartition(new Text(term), value, numReduceTasks);
         }
     }
-    public static class InvertedIndexReducer extends Reducer<Text, IntWritable, Text, Text>
+    public static class InvertedIndexReducer extends TableReducer<Text, IntWritable, NullWritable>
     {
         private Text word1 = new Text(), word2 = new Text();
         private String temp = new String();
         static Text CurrentItem = new Text(" ");
         static List<String> postingList = new ArrayList<String>();
 
+       /* protected void setup(Context context)
+        {
+            mos = new MultipleOutputs(context);
+        }*/
         public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException
         {
             int sum = 0;
@@ -108,17 +112,18 @@ public class InvertedIndex
                     /*向表中添加数据*/
                     Put put = new Put(Bytes.toBytes(CurrentItem.toString()));
                     put.add(Bytes.toBytes("f1"), Bytes.toBytes("AVG_NUM"), Bytes.toBytes(avg_num));
-                    HTable table = new HTable(HBASE_CONFIG, tableName);
-                    table.put(put);
-                    table.close();
+                    context.write(NullWritable.get(), put);
+                   // HTable table = new HTable(HBASE_CONFIG, tableName);
+                   // table.put(put);
+                   // table.close();
                     /*文件输出倒排索引结果*/
-                    String avg = new Formatter().format("%.1f", avg_num).toString();
-                    context.write(CurrentItem, new Text(avg + "," + out.toString()));
+                   // String avg = new Formatter().format("%.1f", avg_num).toString();
+                    //context.write(CurrentItem, new Text(avg + "," + out.toString()));
+                  //  mos.write("hdfs", CurrentItem, new Text(avg + "," + out.toString()), outputPath.toString());
                 }
                 postingList = new ArrayList<String>();
                 CurrentItem = new Text(word1);
             }
-            //CurrentItem = new Text(word1);
             postingList.add(word2.toString());  //旧的单词，添加进postingList
         }
 
@@ -140,20 +145,25 @@ public class InvertedIndex
                 /*向表中添加数据*/
                 Put put = new Put(Bytes.toBytes(CurrentItem.toString()));
                 put.add(Bytes.toBytes("f1"), Bytes.toBytes("AVG_NUM"), Bytes.toBytes(avg_num));
-                HTable table = new HTable(HBASE_CONFIG, tableName);
-                table.put(put);
-                table.close();
+                context.write(NullWritable.get(), put);
+                // HTable table = new HTable(HBASE_CONFIG, tableName);
+                // table.put(put);
+                // table.close();
                 /*文件输出倒排索引结果*/
-                String avg = new Formatter().format("%.1f", avg_num).toString();
-                context.write(CurrentItem, new Text(avg + "," + out.toString()));
+               // String avg = new Formatter().format("%.1f", avg_num).toString();
+                //context.write(CurrentItem, new Text(avg + "," + out.toString()));
+               // mos.write("hdfs", CurrentItem, new Text(avg + "," + out.toString()), outputPath.toString());
             }
             //table.close();//释放资源
+           // mos.close();
         }
     }
     public static void main(String[] args)
     {
 
         try{
+            HBASE_CONFIG.set(TableOutputFormat.OUTPUT_TABLE, tableName);
+            HBASE_CONFIG.set("dfs.socket.timeout", "180000");
 
             HBaseAdmin hAdmin = new HBaseAdmin(HBASE_CONFIG);
             if(hAdmin.tableExists(tableName))       //hbase中已存在表,删除
@@ -176,16 +186,31 @@ public class InvertedIndex
 
             Configuration conf = new Configuration();
             Job job = Job.getInstance(conf,"InvertedIndex");
+
             job.setJarByClass(InvertedIndex.class);
-            job.setInputFormatClass(TextInputFormat.class);
+
             job.setMapperClass(InvertedIndexMapper.class);
             job.setCombinerClass(SumCombiner.class);
-            job.setPartitionerClass(NewPartitioner.class);
-            job.setReducerClass(InvertedIndexReducer.class);
-            job.setOutputKeyClass(Text.class);
-            job.setOutputValueClass(IntWritable.class);
+            //job.setPartitionerClass(NewPartitioner.class);
+            TableMapReduceUtil.initTableReducerJob(tableName, InvertedIndexReducer.class, job,NewPartitioner.class,null,null,null,false);
+            job.setMapOutputKeyClass(Text.class);
+            job.setMapOutputValueClass(IntWritable.class);
+            job.setOutputKeyClass(ImmutableBytesWritable.class);
+            job.setOutputValueClass(Put.class);
+            //job.setReducerClass(InvertedIndexReducer.class);
+            //job.setOutputKeyClass(Text.class);
+            //job.setOutputValueClass(Text.class);
+            //job.setOutputKeyClass(Text.class);
+           // job.setOutputValueClass(NullWritable.class);
+            job.setInputFormatClass(TextInputFormat.class);
+            job.setOutputFormatClass(TableOutputFormat.class);
+
+
+            //MultipleOutputs.addNamedOutput(job, "hdfs", TextOutputFormat.class, Text.class, Text.class);
+
             FileInputFormat.addInputPath(job, new Path(args[0]));
-            FileOutputFormat.setOutputPath(job, new Path(args[1]));
+            outputPath = new Path(args[1]);
+            //FileOutputFormat.setOutputPath(job, new Path(args[1]));
             System.exit(job.waitForCompletion(true) ? 0 : 1);
         }catch (Exception e)
         {
