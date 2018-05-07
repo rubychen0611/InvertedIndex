@@ -1,5 +1,5 @@
-InvertedIndex.class
-InvertedIndex$NewPartitioner.class
-InvertedIndex$InvertedIndexReducer.class
-InvertedIndex$SumCombiner.class
-InvertedIndex$InvertedIndexMapper.class
+HBaseWrite$InvertedIndexMapper.class
+HBaseWrite$SumCombiner.class
+HBaseWrite$InvertedIndexReducer.class
+HBaseWrite$NewPartitioner.class
+HBaseWrite.class

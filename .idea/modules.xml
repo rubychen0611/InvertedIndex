@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/InvertedIndex.iml" filepath="$PROJECT_DIR$/InvertedIndex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HBaseWrite.iml" filepath="$PROJECT_DIR$/HBaseWrite.iml" />
     </modules>
   </component>
 </project>

@@ -1,1 +1,1 @@
-# InvertedIndex
+# HBaseWrite

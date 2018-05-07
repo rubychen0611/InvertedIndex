@@ -2,7 +2,7 @@
   <artifact type="jar" name="InvertedIndex:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/InvertedIndex_jar</output-path>
     <root id="archive" name="InvertedIndex.jar">
-      <element id="module-output" name="InvertedIndex" />
+      <element id="module-output" name="HBaseWrite" />
       <element id="library" level="project" name="hadoop-mapreduce-client-core-2.7.1" />
       <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-2.7.1-tests.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop-2.7.1/share/hadoop/mapreduce/hadoop-mapreduce-client-hs-2.7.1.jar" path-in-jar="/" />
