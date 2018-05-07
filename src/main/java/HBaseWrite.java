@@ -1,4 +1,5 @@
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
@@ -16,19 +17,20 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.LazyOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.mapreduce.lib.partition.HashPartitioner;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.*;
 
 public class HBaseWrite
 {
     private static String tableName = "Wuxia";
     private static Configuration HBASE_CONFIG = HBaseConfiguration.create();
-    //private static HTable table;
-    private static MultipleOutputs<Text, Text> mos;
-    private static Path outputPath;
     public static class InvertedIndexMapper extends Mapper<LongWritable, Text, Text, IntWritable>
     {
 
@@ -77,13 +79,16 @@ public class HBaseWrite
     {
         private Text word1 = new Text(), word2 = new Text();
         private String temp = new String();
-        static Text CurrentItem = new Text(" ");
-        static List<String> postingList = new ArrayList<String>();
+        private static Text CurrentItem = new Text(" ");
+        private static List<String> postingList = new ArrayList<String>();
+        private static String outputName = "InvertedIndexResult";
 
-       /* protected void setup(Context context)
+        private MultipleOutputs<Text,Text> mos;
+
+        public void setup(Context context)
         {
             mos = new MultipleOutputs(context);
-        }*/
+        }
         public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException
         {
             int sum = 0;
@@ -111,14 +116,12 @@ public class HBaseWrite
                     /*向表中添加数据*/
                     Put put = new Put(Bytes.toBytes(CurrentItem.toString()));
                     put.add(Bytes.toBytes("f1"), Bytes.toBytes("AVG_NUM"), Bytes.toBytes(avg));
-                    context.write(NullWritable.get(), put);
-                   // HTable table = new HTable(HBASE_CONFIG, tableName);
-                   // table.put(put);
-                   // table.close();
+                    //context.write(NullWritable.get(), put);
+                    mos.write("hbase",NullWritable.get(), put);
                     /*文件输出倒排索引结果*/
 
                     //context.write(CurrentItem, new Text(avg + "," + out.toString()));
-                  //  mos.write("hdfs", CurrentItem, new Text(avg + "," + out.toString()), outputPath.toString());
+                    mos.write("hdfs", CurrentItem, new Text(avg + "," + out.toString()), outputName);
                 }
                 postingList = new ArrayList<String>();
                 CurrentItem = new Text(word1);
@@ -145,17 +148,14 @@ public class HBaseWrite
                 /*向表中添加数据*/
                 Put put = new Put(Bytes.toBytes(CurrentItem.toString()));
                 put.add(Bytes.toBytes("f1"), Bytes.toBytes("AVG_NUM"), Bytes.toBytes(avg));
-                context.write(NullWritable.get(), put);
-                // HTable table = new HTable(HBASE_CONFIG, tableName);
-                // table.put(put);
-                // table.close();
+                //context.write(NullWritable.get(), put);
+                mos.write("hbase",NullWritable.get(), put );
                 /*文件输出倒排索引结果*/
 
                 //context.write(CurrentItem, new Text(avg + "," + out.toString()));
-               // mos.write("hdfs", CurrentItem, new Text(avg + "," + out.toString()), outputPath.toString());
+                mos.write("hdfs", CurrentItem, new Text(avg + "," + out.toString()), outputName);
             }
-            //table.close();//释放资源
-           // mos.close();
+            mos.close();
         }
     }
     public static void main(String[] args)
@@ -193,6 +193,8 @@ public class HBaseWrite
             job.setCombinerClass(SumCombiner.class);
             //job.setPartitionerClass(NewPartitioner.class);
             TableMapReduceUtil.initTableReducerJob(tableName, InvertedIndexReducer.class, job,NewPartitioner.class,null,null,null,false);
+            MultipleOutputs.addNamedOutput(job, "hbase", TableOutputFormat.class, Text.class, Text.class);
+            MultipleOutputs.addNamedOutput(job, "hdfs", TextOutputFormat.class, Text.class, Text.class);
             job.setMapOutputKeyClass(Text.class);
             job.setMapOutputValueClass(IntWritable.class);
             job.setOutputKeyClass(ImmutableBytesWritable.class);
@@ -202,13 +204,22 @@ public class HBaseWrite
             //job.setOutputValueClass(Text.class);
             //job.setOutputKeyClass(Text.class);
            // job.setOutputValueClass(NullWritable.class);
-            job.setInputFormatClass(TextInputFormat.class);
-            job.setOutputFormatClass(TableOutputFormat.class);
-
-
-            //MultipleOutputs.addNamedOutput(job, "hdfs", TextOutputFormat.class, Text.class, Text.class);
-
+            //job.setInputFormatClass(TextInputFormat.class);
+            //job.setOutputFormatClass(TableOutputFormat.class);
+            LazyOutputFormat.setOutputFormatClass(job, TextOutputFormat.class);
             FileInputFormat.addInputPath(job, new Path("/input"));
+            Path outputPath = new Path("/output");
+            try {
+                FileSystem fileSystem = FileSystem.get(new URI(outputPath.toString()), new Configuration());
+                if (fileSystem.exists(outputPath))
+                    fileSystem.delete(outputPath, true);
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            FileOutputFormat.setOutputPath(job,outputPath);
+
+
             //outputPath = new Path(args[1]);
             //FileOutputFormat.setOutputPath(job, new Path(args[1]));
             System.exit(job.waitForCompletion(true) ? 0 : 1);

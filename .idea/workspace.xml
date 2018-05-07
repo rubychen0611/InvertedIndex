@@ -7,37 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8aae0d8-dacd-4df1-bc9a-5e3d74521786" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/InvertedIndex_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/InvertedIndex_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InvertedIndex.iml" beforeDir="false" afterPath="$PROJECT_DIR$/HBaseWrite.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/input/古龙01.白玉老虎.txt.segmented" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/input/古龙02.白玉雕龙.txt.segmented" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/input/古龙03.碧血洗银枪.txt.segmented" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/input/古龙04.边城刀声.txt.segmented" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/input/古龙05.边城浪子.txt.segmented" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/input/古龙06.彩环曲.txt.segmented" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/input/古龙07.残金缺玉.txt.segmented" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/._SUCCESS.crc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/.part-r-00000.crc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/_SUCCESS" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/part-r-00000" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/InvertedIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HBaseWrite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/InvertedIndex-1.0-SNAPSHOT-jar-with-dependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/InvertedIndex-1.0-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/InvertedIndex$InvertedIndexMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/InvertedIndex$InvertedIndexReducer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/InvertedIndex$NewPartitioner.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/InvertedIndex$SumCombiner.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/InvertedIndex.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/HBaseWrite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HBaseWrite.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -53,11 +23,13 @@
       <file leaf-file-name="HBaseWrite.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/HBaseWrite.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="193" column="60" lean-forward="true" selection-start-line="193" selection-start-column="60" selection-end-line="193" selection-end-column="60" />
+            <state relative-caret-position="-1291">
+              <caret line="155" column="95" selection-start-line="155" selection-start-column="95" selection-end-line="155" selection-end-column="95" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3453#3461#0" expanded="true" />
+                <element signature="e#3446#3447#0" expanded="true" />
+                <element signature="e#3504#3505#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -282,13 +254,13 @@
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50039065" side_tool="true" weight="0.33989727" />
-      <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.14325842" />
+      <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.11757624" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32978722" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49960938" visible="true" weight="0.15425532" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.095744684" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49960938" visible="true" weight="0.27393618" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.2535461" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20906901" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18097913" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
@@ -313,13 +285,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1050">
-          <caret line="35" column="32" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/HBaseWrite.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -327,6 +292,8 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3453#3461#0" expanded="true" />
+            <element signature="e#3446#3447#0" expanded="true" />
+            <element signature="e#3504#3505#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -345,6 +312,8 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3453#3461#0" expanded="true" />
+            <element signature="e#3446#3447#0" expanded="true" />
+            <element signature="e#3504#3505#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -356,6 +325,8 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3453#3461#0" expanded="true" />
+            <element signature="e#3446#3447#0" expanded="true" />
+            <element signature="e#3504#3505#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -449,13 +420,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/hadoop-core/1.2.1/hadoop-core-1.2.1.jar!/org/apache/hadoop/mapreduce/lib/output/MultipleOutputs.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2400">
-          <caret line="102" column="23" selection-start-line="102" selection-start-column="23" selection-end-line="102" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/hbase/hbase-server/1.2.6/hbase-server-1.2.6.jar!/org/apache/hadoop/hbase/mapreduce/TableOutputFormat.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="839">
@@ -477,13 +441,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/hadoop-core/1.2.1/hadoop-core-1.2.1.jar!/org/apache/hadoop/mapreduce/lib/output/MultipleOutputs.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-71">
+          <caret line="150" column="94" lean-forward="true" selection-start-line="150" selection-start-column="94" selection-end-line="150" selection-end-column="94" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/hadoop-core/1.2.1/hadoop-core-1.2.1.jar!/org/apache/hadoop/fs/Path.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-971">
+          <caret line="60" column="29" lean-forward="true" selection-start-line="60" selection-start-column="29" selection-end-line="60" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/HBaseWrite.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="193" column="60" lean-forward="true" selection-start-line="193" selection-start-column="60" selection-end-line="193" selection-end-column="60" />
+        <state relative-caret-position="-1291">
+          <caret line="155" column="95" selection-start-line="155" selection-start-column="95" selection-end-line="155" selection-end-column="95" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3453#3461#0" expanded="true" />
+            <element signature="e#3446#3447#0" expanded="true" />
+            <element signature="e#3504#3505#0" expanded="true" />
           </folding>
         </state>
       </provider>
